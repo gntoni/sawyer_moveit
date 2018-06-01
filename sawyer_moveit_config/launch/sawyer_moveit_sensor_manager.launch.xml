@@ -18,7 +18,7 @@
                args="$(arg camera_link_pose) /torso /camera_link 100" />
 
          <!-- octomap parameters for moveit -->
-         <group ns="move_group" >
+         <group ns="move_group">
              <param name="octomap_frame" type="string" value="camera_link" />
              <param name="octomap_resolution" type="double" value="0.02" />
              <rosparam command="load" file="$(find sawyer_moveit_config)/config/kinect_sensor.yaml" />
@@ -43,5 +43,20 @@
              <param name="octomap_resolution" type="double" value="0.02" />
              <rosparam command="load" file="$(find sawyer_moveit_config)/config/xtion_sensor.yaml" />
          </group>
+     </group>
+     <arg name="astra" default="false"/>
+     <group if="$(arg astra)" >
+         <!-- launch openni to talk to xtion -->
+         <include file="$(find astra_launch)/launch/astra.launch">
+         </include>
+         <!-- Users update this to set transform between camera and robot -->
+         <!-- This example has the Astra mounted at the right side of the robot -->
+         <node pkg="tf" type="static_transform_publisher" name="camera_link_broadcaster"
+               args="$(arg camera_link_pose) /base /camera_link 100" />
+
+         <!-- octomap parameters for moveit -->
+             <param name="octomap_frame" type="string" value="camera_link" />
+             <param name="octomap_resolution" type="double" value="0.02" />
+             <rosparam command="load" file="$(find sawyer_moveit_config)/config/astra_sensor.yaml" />
      </group>
 </launch>

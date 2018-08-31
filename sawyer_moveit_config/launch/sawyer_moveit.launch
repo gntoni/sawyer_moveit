@@ -28,6 +28,7 @@
   <arg name="kinect" default="false" />
   <arg name="xtion" default="false" />
   <arg name="astra" default="false" />
+  <arg name="planner" default="ompl" />
   <arg name="camera_link_pose" default="0.15 0.075 0.5 0.0 0.7854 0.0"/>
   <include file="$(find sawyer_moveit_config)/launch/move_group.launch">
     <arg name="kinect" value="$(arg kinect)" />
@@ -38,6 +39,7 @@
     <arg name="fake_execution" value="false"/>
     <arg name="info" value="true"/>
     <arg name="debug" value="$(arg debug)"/>
+    <arg name="planner" value="$(arg planner)"/>
   </include>
 
   <include file="$(find sawyer_moveit_config)/launch/moveit_rviz.launch">
